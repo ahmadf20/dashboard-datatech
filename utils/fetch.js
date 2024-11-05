@@ -8,7 +8,10 @@ function fetchData(onSuccess) {
     .then((response) => response.json())
     .then((data) => onSuccess(data))
     .catch((err) => {
-      error.innerHTML = "Failed to fetch data: " + err.message;
+      const message = "Failed to fetch data: " + err.message;
+
+      error.innerHTML = message;
+      alert(message);
     })
     .finally(() => {
       loader.style.display = "none";

@@ -15,13 +15,16 @@
       <input type="hidden" id="id" name="id" />
 
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required />
+      <input type="text" id="name" name="name" />
+      <small class="input-error name"></small>
 
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
+      <input type="email" id="email" name="email" />
+      <small class="input-error email"></small>
 
       <label for="age">Age:</label>
-      <input type="number" id="age" name="age" required min="1" max="99" />
+      <input type="number" id="age" name="age" />
+      <small class="input-error age"></small>
 
       <div>
         <label for="status">Status:</label>

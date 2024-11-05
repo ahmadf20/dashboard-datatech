@@ -12,6 +12,10 @@ function clearForm() {
   document.getElementById("email").value = "";
   document.getElementById("age").value = "";
   document.getElementById("status").checked = false;
+
+  document.querySelector(".input-error.name").textContent = "";
+  document.querySelector(".input-error.email").textContent = "";
+  document.querySelector(".input-error.age").textContent = "";
 }
 
 function getFormData() {
@@ -25,6 +29,8 @@ function getFormData() {
 }
 
 function submitForm(user, users) {
+  if (!validateForm(user)) return false;
+
   if (user.id) {
     const index = users.findIndex((u) => u.id === Number(user.id));
     users[index] = user;
@@ -32,25 +38,72 @@ function submitForm(user, users) {
     user.id = Date.now();
     users.push(user);
   }
-}
-
-function validateForm(user) {
-  if (!user.name || !user.email || !user.age) {
-    alert("Please fill in all fields");
-    return false;
-  }
-
-  if (user.age < 1 || user.age > 99) {
-    alert("Age must be between 1 and 99");
-    return false;
-  }
-
-  if (user.email.indexOf("@") === -1) {
-    alert("Please enter a valid email");
-    return false;
-  }
 
   return true;
 }
 
-export { populateForm, clearForm, getFormData, submitForm };
+function validateForm(user) {
+  let isValid = true;
+
+  const errorName = document.querySelector(".input-error.name");
+  const errorEmail = document.querySelector(".input-error.email");
+  const errorAge = document.querySelector(".input-error.age");
+
+  errorName.textContent = "";
+  errorEmail.textContent = "";
+  errorAge.textContent = "";
+
+  if (!user.name) {
+    errorName.textContent = "Name cannot be empty";
+    isValid = false;
+  }
+
+  if (!user.email) {
+    errorEmail.textContent = "Email cannot be empty";
+    isValid = false;
+  }
+
+  if (!user.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    errorEmail.textContent = "Email is not valid";
+    isValid = false;
+  }
+
+  if (!user.age) {
+    errorAge.textContent = "Age cannot be empty";
+    isValid = false;
+  }
+
+  if (user.age < 0) {
+    errorAge.textContent = "Age must be a positive number";
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function attachInputErrorListener() {
+  const nameField = document.querySelector("#name");
+  const emailField = document.querySelector("#email");
+  const ageField = document.querySelector("#age");
+
+  nameField.addEventListener("input", () => {
+    validateForm(getFormData());
+  });
+
+  emailField.addEventListener("input", () => {
+    validateForm(getFormData());
+  });
+
+  ageField.addEventListener("input", () => {
+    validateForm(getFormData());
+  });
+}
+
+export {
+  populateForm,
+  clearForm,
+  getFormData,
+  submitForm,
+  validateForm,
+  attachInputErrorListener,
+};

@@ -61,3 +61,7 @@ input[type="number"] {
   animation: spin 2s linear infinite;
   display: none;
 }
+
+.input-error {
+  color: red;
+}

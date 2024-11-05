@@ -1,10 +1,12 @@
 import { populateTable } from "./utils/table.js";
 import { resetSortFilter, sortData } from "./utils/sort.js";
 import {
+  attachInputErrorListener,
   clearForm,
   getFormData,
   populateForm,
   submitForm,
+  validateForm,
 } from "./utils/form.js";
 import { getData, setData as saveData } from "./utils/data.js";
 import { fetchData } from "./utils/fetch.js";
@@ -48,6 +50,26 @@ filterStatus.addEventListener("change", (e) => {
   populateTable(newUsers, content);
 });
 
+// Edit & Delete
+content.addEventListener("click", (e) => {
+  if (e.target.classList.contains("edit-btn")) {
+    const id = e.target.parentElement.parentElement.id;
+    const user = users.find((u) => Number(u.id) === Number(id));
+
+    populateForm(user);
+  }
+
+  if (e.target.classList.contains("delete-btn")) {
+    const id = e.target.parentElement.parentElement.id;
+    users = users.filter((u) => {
+      return Number(u.id) !== Number(id);
+    });
+
+    saveData(users);
+    populateTable(users, content);
+  }
+});
+
 // Form
 const form = document.querySelector("form");
 
@@ -59,7 +81,9 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const user = getFormData();
-  submitForm(user, users);
+  const res = submitForm(user, users);
+
+  if (!res) return;
 
   clearForm();
 
@@ -68,30 +92,8 @@ form.addEventListener("submit", (e) => {
   populateTable(users, content);
 });
 
-// Edit & Delete
-content.addEventListener("click", (e) => {
-  if (e.target.classList.contains("edit-btn")) {
-    const id = e.target.parentElement.parentElement.id;
-    const user = users.find((u) => u.id === Number(id));
-
-    saveData(users);
-    populateForm(user);
-  }
-
-  if (e.target.classList.contains("delete-btn")) {
-    const id = e.target.parentElement.parentElement.id;
-    users = users.filter((u) => u.id !== Number(id));
-
-    saveData(users);
-    populateTable(users, content);
-  }
-});
-
-// Data Fetching
 function initializeData() {
   const data = getData();
-
-  console.log(data);
 
   if (data.length > 0) {
     users = data;
@@ -114,3 +116,4 @@ function initializeData() {
 }
 
 initializeData();
+attachInputErrorListener();

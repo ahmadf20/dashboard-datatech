@@ -6,7 +6,6 @@ import {
   getFormData,
   populateForm,
   submitForm,
-  validateForm,
 } from "./utils/form.js";
 import { getData, setData as saveData } from "./utils/data.js";
 import { fetchData } from "./utils/fetch.js";
@@ -16,6 +15,7 @@ let users = [];
 const content = document.querySelector("#content");
 populateTable(users, content);
 
+// Sort
 const sortBy = document.querySelector("#sort-by");
 const sortType = document.querySelector("#sort-type");
 
@@ -86,13 +86,15 @@ form.addEventListener("submit", (e) => {
   if (!res) return;
 
   clearForm();
-
   resetSortFilter(sortBy, sortType, filterStatus);
   saveData(users);
   populateTable(users, content);
 });
 
 function initializeData() {
+  // Load the data from local storage if exists
+  // Otherwise fetch the data from the API
+
   const data = getData();
 
   if (data.length > 0) {

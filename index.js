@@ -6,6 +6,8 @@ import {
   populateForm,
   submitForm,
 } from "./utils/form.js";
+import { getData, setData as saveData } from "./utils/data.js";
+import { fetchData } from "./utils/fetch.js";
 
 let users = [];
 
@@ -62,7 +64,7 @@ form.addEventListener("submit", (e) => {
   clearForm();
 
   resetSortFilter(sortBy, sortType, filterStatus);
-
+  saveData(users);
   populateTable(users, content);
 });
 
@@ -71,27 +73,31 @@ content.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit-btn")) {
     const id = e.target.parentElement.parentElement.id;
     const user = users.find((u) => u.id === Number(id));
+
+    saveData(users);
     populateForm(user);
   }
 
   if (e.target.classList.contains("delete-btn")) {
     const id = e.target.parentElement.parentElement.id;
     users = users.filter((u) => u.id !== Number(id));
+
+    saveData(users);
     populateTable(users, content);
   }
 });
 
 // Data Fetching
+function initializeData() {
+  const data = getData();
 
-const loader = document.querySelector("#loader");
-const error = document.querySelector("#error");
+  console.log(data);
 
-function fetchData() {
-  loader.style.display = "block";
-
-  fetch("https://api.github.com/users")
-    .then((response) => response.json())
-    .then((data) => {
+  if (data.length > 0) {
+    users = data;
+    populateTable(users, content);
+  } else {
+    fetchData((data) => {
       const userData = data.map((user) => ({
         id: user.id,
         name: user.login,
@@ -101,15 +107,10 @@ function fetchData() {
       }));
 
       users = userData;
-
+      saveData(users);
       populateTable(users, content);
-    })
-    .catch((err) => {
-      error.innerHTML = "Failed to fetch data: " + err.message;
-    })
-    .finally(() => {
-      loader.style.display = "none";
     });
+  }
 }
 
-fetchData();
+initializeData();

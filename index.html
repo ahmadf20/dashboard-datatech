@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataTech Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="index.js"></script>
+  </head>
+  <body>
+    <h1>DataTech Dashboard</h1>
+
+    <div class="filter-container">
+      <!-- Filter -->
+      <div>
+        Status:
+        <select id="filter-status">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <!-- Sort -->
+      <div>
+        Sort By:
+        <select id="sort-by">
+          <option value="name">Name</option>
+          <option value="age">Age</option>
+          <option value="status">Status</option>
+        </select>
+        <select id="sort-type">
+          <option value="asc">Asc</option>
+          <option value="desc">Desc</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="content"></tbody>
+      </table>
+    </div>
+  </body>
+</html>

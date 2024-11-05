@@ -24,3 +24,27 @@ td {
   border: 1px solid black;
   padding: 5px;
 }
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 32px;
+  max-width: 400px;
+  border: 1px solid black;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+/* Remove arrows for Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

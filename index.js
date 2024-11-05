@@ -7,36 +7,7 @@ import {
   submitForm,
 } from "./utils/form.js";
 
-let users = [
-  {
-    id: 1,
-    name: "Ahmad Faaiz Al-auza'i",
-    email: "ahmadfaaiz@gmail.com",
-    age: 22,
-    status: true,
-  },
-  {
-    id: 2,
-    name: "Zulfikar Salim Sukomulyo",
-    email: "zulfikarsalim@gmail",
-    age: 10,
-    status: false,
-  },
-  {
-    id: 3,
-    name: "Puteri Sari",
-    email: "puterisari@gmail",
-    age: 18,
-    status: true,
-  },
-  {
-    id: 4,
-    name: "Siti Fadilah",
-    email: "siti_fadilah@gmail",
-    age: 25,
-    status: false,
-  },
-];
+let users = [];
 
 const content = document.querySelector("#content");
 populateTable(users, content);
@@ -109,3 +80,36 @@ content.addEventListener("click", (e) => {
     populateTable(users, content);
   }
 });
+
+// Data Fetching
+
+const loader = document.querySelector("#loader");
+const error = document.querySelector("#error");
+
+function fetchData() {
+  loader.style.display = "block";
+
+  fetch("https://api.github.com/users")
+    .then((response) => response.json())
+    .then((data) => {
+      const userData = data.map((user) => ({
+        id: user.id,
+        name: user.login,
+        email: user.login + "@gmail.com",
+        age: user.id + 10,
+        status: user.site_admin,
+      }));
+
+      users = userData;
+
+      populateTable(users, content);
+    })
+    .catch((err) => {
+      error.innerHTML = "Failed to fetch data: " + err.message;
+    })
+    .finally(() => {
+      loader.style.display = "none";
+    });
+}
+
+fetchData();

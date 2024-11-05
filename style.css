@@ -5,6 +5,8 @@ body {
 table {
   border-collapse: collapse;
   margin-top: 10px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .table-container {
@@ -47,4 +49,15 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+#loader {
+  margin-top: 24px;
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  display: block;
 }

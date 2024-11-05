@@ -1,7 +1,7 @@
-export const populateTable = (data, id) => {
+export const populateTable = (data, tableId) => {
   content.innerHTML = "";
   data.forEach((user) => {
-    id.innerHTML += `
+    tableId.innerHTML += `
        <tr id="${user.id}">
           <td>${user.name}</td>
           <td>${user.email}</td>

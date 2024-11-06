@@ -11,5 +11,10 @@ A simple dashboard to display a list of users and allow them to be edited and de
 
 1. Clone the repository
 3. Open the terminal and run `npm install`
-4. Run `npm start` to start the development server
+4. Run `npm run dev` to start the development server
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app
+
+
+## How to build 
+
+Run `npm run build && npm run preview`

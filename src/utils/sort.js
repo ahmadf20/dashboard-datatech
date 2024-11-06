@@ -1,4 +1,6 @@
 function sortData(data, field, sortType) {
+  if (!data.length) return [];
+
   const isString = typeof data[0][field] === "string";
 
   return [...data].sort((a, b) => {
@@ -12,10 +14,4 @@ function sortData(data, field, sortType) {
   });
 }
 
-function resetSortFilter(sortBy, sortType, filterStatus) {
-  sortBy.value = "name";
-  sortType.value = "asc";
-  filterStatus.value = "all";
-}
-
-export { sortData, resetSortFilter };
+export { sortData };
